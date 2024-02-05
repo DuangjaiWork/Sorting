@@ -26,28 +26,19 @@ class Renderer(Window):
             self.bars[l + i].color = (255, 0, 0, 255)  # Set color to red for comparison
             self.bars[mid + 1 + j].color = (255, 0, 0, 255)  # Set color to red for comparison
             yield
+            self.bars[l + i].color = (255, 255, 255, 255)  # Reset color to white
+            self.bars[mid + 1 + j].color = (255, 255, 255, 255)  # Reset color to white
 
-            if left[i] <= right[j]:
-                self.x[k] = left[i]
+            self.x[k] = min((left[i], right[j]))
+            if self.x[k] == left[i]:
                 i += 1
             else:
-                self.x[k] = right[j]
                 j += 1
-
             k += 1
-            self.update_bars()
+            yield
 
-        while i < len(left):
-            self.x[k] = left[i]
-            i += 1
-            k += 1
-            self.update_bars()
-
-        while j < len(right):
-            self.x[k] = right[j]
-            j += 1
-            k += 1
-            self.update_bars()
+        self.x[k:r + 1] = left[i:] + right[j:]
+        self.update_bars()
 
     def update_bars(self):
         self.bars = [Rectangle(100 + e * 100, 60, 60, i * 80, batch=self.batch, color=(255, 255, 255, 255)) for e, i in enumerate(self.x)]
