@@ -6,10 +6,10 @@ from pyglet import clock
 
 class Renderer(Window):
     def __init__(self):
-        super().__init__(790, 820, "Bubble sort")
+        super().__init__(960, 750, "Bubble sort")
         self.batch = Batch()
-        self.x = [3, 4, 2, 1, 6, 5]
-        self.bars = [Rectangle(100 + e * 100, 100, 80, i * 100, batch=self.batch) for e, i in enumerate(self.x)]
+        self.x = [3, 4, 2, 7, 1, 6, 5, 8]
+        self.bars = [Rectangle(100 + e * 100, 60, 60, i*80, batch=self.batch) for e, i in enumerate(self.x)]
         self.steps = self.bubble_sort()
         self.comparison_indices = None
 
@@ -35,7 +35,7 @@ class Renderer(Window):
             self.comparison_indices = comparison_indices
 
             for i, bar in enumerate(self.bars):
-                bar.height = current_step[i] * 100
+                bar.height = current_step[i] * 80
 
     def on_draw(self):
         self.clear()
